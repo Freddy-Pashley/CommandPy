@@ -14,8 +14,8 @@ import os
 
 current_directory = str(os.path.dirname(os.path.realpath(__file__)))
 
-VALIDCOMMANDS = ['exit']
-VALIDCOMMANDS_SORTED = VALIDCOMMANDS.sort()
+VALIDCOMMANDS = ['help', 'exit']
+VALIDCOMMANDS_SORTED = sorted(VALIDCOMMANDS, key=str.lower)
 
 print('CommandPy [Version {}]\n(c) 2020 Fred Pashley. All rights reserved.'.format(VERSION))
 
@@ -33,7 +33,12 @@ while True:
 			arguments = []
 		finally:
 			if command in VALIDCOMMANDS:
-				if command == 'exit':
+				if command == 'help':
+					print('For more information on a specific command, type HELP command-name')
+					for item in VALIDCOMMANDS_SORTED:
+						print(f'{item}')
+					print('\nFor more information on tools see the online documentation.')
+				elif command == 'exit':
 					quit()
 				else:
 					pass
