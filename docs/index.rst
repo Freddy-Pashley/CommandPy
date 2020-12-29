@@ -4,16 +4,16 @@
    contain the root `toctree` directive.
 
 CommandPy Documentation
-=====================================
+=======================
 
 The **CommandPy Documentation** will solve your problems with the system you use,
 by providing an explanation to each command and patch notes.
 
 
+.. contents::
 
-Contents
-==================
 
-* :ref:`Commands`
+Installation
+------------
 
-  * :ref:`help`
+To install CommandPy, download :download:`the ZIP folder. <../CommandPy.py>`
