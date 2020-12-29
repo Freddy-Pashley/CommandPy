@@ -34,10 +34,19 @@ while True:
 		finally:
 			if command in VALIDCOMMANDS:
 				if command == 'help':
-					print('For more information on a specific command, type HELP command-name')
-					for item in VALIDCOMMANDS_SORTED:
-						print(f'{item}')
-					print('\nFor more information on tools see the online documentation.')
+					if arguments == []:
+						print('For more information on a specific command, type HELP command-name')
+						for item in VALIDCOMMANDS_SORTED:
+							print(f'{item.upper()}')
+						print('\nFor more information on tools see the online documentation.')
+					elif len(arguments) > 1:
+						print('This command is not supported by the help utility.')
+					else:
+						help_command = str(arguments[0]).lower()
+						if help_command == 'exit':
+							print('Quits the CommandPy program (command interpreter).\n\nEXIT')
+						elif help_command == 'help':
+							print('Provides help information for commands.\n\nHELP [command]\n\n    command - displays help information on that command.')
 				elif command == 'exit':
 					quit()
 				else:
