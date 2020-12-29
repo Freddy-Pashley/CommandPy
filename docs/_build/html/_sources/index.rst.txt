@@ -10,6 +10,21 @@ CommandPy Documentation
 The **CommandPy Documentation** will solve your problems with the system you use,
 by providing an explanation to each command and patch notes.
 
+*CommandPy* is a modern, simplistic and useful command prompt. It can be used for many purposes,
+from developers to general home-use.
+
+
+------------------
+Support/Assistance
+------------------
+
+For support/assistance, you can use one of the following methods to contact the developer:
+
+* Discord
+	* https://discord.gg/cuRVHC85Yb
+* Email
+	* freddy.pashley@gmail.com
+
 
 .. contents::
 
