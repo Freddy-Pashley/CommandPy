@@ -32,12 +32,27 @@ Instructions for installation:
 Commands
 --------
 
+Cls
+---
+
+	Clears the screen.
+
+	Syntax:
+		``CLS``
+
+
 Exit
 ----
 	
 	Quits the CommandPy program (command interpreter).
 
+	Syntax:
+		``EXIT``
+
 Help
 ----
 	
 	Provides help information for commands.
+
+	Syntax:
+		``HELP [command]``
