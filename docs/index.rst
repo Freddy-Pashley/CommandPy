@@ -16,4 +16,4 @@ by providing an explanation to each command and patch notes.
 Installation
 ------------
 
-To install CommandPy, download :download:`the ZIP folder. <../CommandPy.py>`
+To install CommandPy, download :download:`the ZIP folder <../CommandPy.zip>`.
