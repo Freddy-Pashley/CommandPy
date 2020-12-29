@@ -11,10 +11,13 @@ except Exception as ex:
 
 
 import os
+import sys
+import platform
+import socket
 
 current_directory = str(os.path.dirname(os.path.realpath(__file__)))
 
-VALIDCOMMANDS = ['help', 'exit', 'cls']
+VALIDCOMMANDS = ['help', 'exit', 'cls', 'ip', 'platform']
 VALIDCOMMANDS_SORTED = sorted(VALIDCOMMANDS, key=str.lower)
 
 print('CommandPy [Version {}]\n(c) 2020 Fred Pashley. All rights reserved.'.format(VERSION))
@@ -49,6 +52,8 @@ while True:
 							print('Provides help information for commands.\n\nHELP [command]\n\n    command - displays help information on that command.')
 						elif help_command == 'cls':
 							print('Clears the screen.\n\nCLS')
+						elif help_command == 'ip':
+							print('Shows all IP addresses detected in the network.\n\nIP [/?]\n\n    /n    ... All IPs except localhosts.')
 				elif command == 'exit':
 					quit()
 				elif command == 'cls':
@@ -56,6 +61,14 @@ while True:
 						os.system('cls')
 					else:
 						os.system('clear')
+				elif command == 'ip':
+					print('')
+					if arguments == []:
+						for item in [ip for ip in socket.gethostbyname_ex(socket.gethostname())[2]]:
+						 	print(f'    {item}')
+					elif arguments[0] == '-n':
+						for item in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1]):
+							print(f'    {item}')
 				else:
 					pass
 			else:

@@ -32,7 +32,7 @@ For support/assistance, you can use one of the following methods to contact the 
 Installation
 ------------
 
-**To install CommandPy**, download :download:`the ZIP folder <../CommandPy.zip>`.
+**To install CommandPy**, download the ZIP folder :download:`by clicking here <../CommandPy.zip>`.
 
 
 Instructions for installation:
@@ -47,7 +47,7 @@ Instructions for installation:
 Commands
 --------
 
-Cls
+CLS
 ---
 
 	Clears the screen.
@@ -56,7 +56,7 @@ Cls
 		``CLS``
 
 
-Exit
+EXIT
 ----
 	
 	Quits the CommandPy program (command interpreter).
@@ -64,10 +64,18 @@ Exit
 	Syntax:
 		``EXIT``
 
-Help
+HELP
 ----
 	
 	Provides help information for commands.
 
 	Syntax:
 		``HELP [command]``
+
+IP
+---
+	
+	Shows all IP addresses detected in the network.
+
+	Syntax:
+		``IP [/?]``
