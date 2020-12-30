@@ -5,7 +5,7 @@ try:
 	with open('version.txt', 'r') as f:
 		VERSION = f.read()
 except FileNotFoundError:
-	VERSION = '~Error~'
+	VERSION = '0.5'
 except Exception as ex:
 	print(ex)
 

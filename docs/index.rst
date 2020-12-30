@@ -45,6 +45,8 @@ Instructions for installation:
 
 *Note: You must have Python 3.8 or later to be able to run this command prompt.*
 
+**Download the developer version of CommandPy** :download:`here <../CommandPyDEV.zip>`.
+
 --------
 Commands
 --------
