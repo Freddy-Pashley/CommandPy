@@ -14,7 +14,7 @@ by providing an explanation to each command and patch notes.
 from developers to general home-use.
 
 
-**Latest VersionL 0.5**
+**Latest Version: 0.5**
 
 ------------------
 Support/Assistance
