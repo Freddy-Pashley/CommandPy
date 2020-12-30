@@ -55,6 +55,8 @@ while True:
 							print('Clears the screen.\n\nCLS')
 						elif help_command == 'ip':
 							print('Shows all IP addresses detected in the network.\n\nIP [/?]\n\n    /n    ... All IPs except localhosts.')
+						elif help_command == 'platform':
+							print('Platform and hardware information.\n\nPLATFORM')
 				elif command == 'exit':
 					quit()
 				elif command == 'cls':
@@ -74,7 +76,6 @@ while True:
 					if arguments == []:
 						print(f'Architecture: {platform.architecture()}')
 						print(f'Machine: {platform.machine()}')
-						print(f'OS: {platform.os()}')
 						print(f'Platform: {platform.platform()}')
 						print(f'Processor: {platform.processor()}')
 				else:

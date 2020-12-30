@@ -14,6 +14,8 @@ by providing an explanation to each command and patch notes.
 from developers to general home-use.
 
 
+**Latest VersionL 0.5**
+
 ------------------
 Support/Assistance
 ------------------
@@ -79,3 +81,11 @@ IP
 
 	Syntax:
 		``IP [/?]``
+
+PLATFORM
+--------
+	
+	Platform and hardware information.
+
+	Syntax:
+		``PLATFORM``
