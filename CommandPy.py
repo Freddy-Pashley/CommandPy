@@ -15,6 +15,7 @@ import sys
 import platform
 import socket
 
+
 current_directory = str(os.path.dirname(os.path.realpath(__file__)))
 
 VALIDCOMMANDS = ['help', 'exit', 'cls', 'ip', 'platform']
@@ -69,6 +70,13 @@ while True:
 					elif arguments[0] == '-n':
 						for item in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1]):
 							print(f'    {item}')
+				elif command == 'platform':
+					if arguments == []:
+						print(f'Architecture: {platform.architecture()}')
+						print(f'Machine: {platform.machine()}')
+						print(f'OS: {platform.os()}')
+						print(f'Platform: {platform.platform()}')
+						print(f'Processor: {platform.processor()}')
 				else:
 					pass
 			else:
