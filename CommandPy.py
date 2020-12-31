@@ -100,10 +100,10 @@ while True:
 							time.sleep(1)
 					elif arguments[0] == '-u' or arguments[0] == '0':
 						print('\n    {}'.format(dt.datetime.utcnow()))
-					elif arguments[0] == '1':
-						tz = pytz.timezone('Europe/Gibraltar')
-						now = datetime.now(tz)
-						print('\n    {}'.format(now))
+					# elif arguments[0] == '1':
+					# 	tz = pytz.timezone('Europe/Gibraltar')
+					# 	now = datetime.now(tz)
+					# 	print('\n    {}'.format(now))
 				else:
 					pass
 			else:
