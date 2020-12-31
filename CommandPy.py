@@ -28,7 +28,7 @@ import pytz
 
 current_directory = str(os.path.dirname(os.path.realpath(__file__)))
 
-VALIDCOMMANDS = ['help', 'exit', 'cls', 'ip', 'platform', 'time', 'cd']
+VALIDCOMMANDS = ['help', 'exit', 'cls', 'ip', 'platform', 'time', 'cd', 'open']
 VALIDCOMMANDS_SORTED = sorted(VALIDCOMMANDS, key=str.lower)
 
 print('CommandPy [Version {}]\n(c) 2020 Fred Pashley. All rights reserved.'.format(VERSION))
@@ -67,10 +67,29 @@ while True:
 							print('Shows all IP addresses detected in the network.\n\nIP [/?]\n\n    /n    ... All IPs except localhosts.')
 						elif help_command == 'platform':
 							print('Platform and hardware information.\n\nPLATFORM')
+						elif help_command == 'open':
+							print('Open a file, enter full path for different directory, file name for same directory. \n\nOPEN')
 						elif help_command == 'time':
 							print('Find the current time and use a timer.\n\nTIME [/?] [amount]\n\n    /s    ... System time (local)\n    /t    ... Takes an amout in seconds (must explicitly say "s") and\n              sleeps for that amount of time.')
 				elif command == 'exit':
-					quit()
+					quit()	
+				elif command == 'open':
+					if arguments == []:
+						print('You cannot have an empty directory.')
+					else:
+						openstring = arguments[0]
+						if "\\" in openstring:
+							try:
+								os.startfile(arguments[0])
+							except FileNotFoundError:
+								print('File not found.')
+						else:
+							directory = '{}\\{}'.format(
+								str(current_directory), openstring)
+							try:
+								os.startfile(directory)
+							except FileNotFoundError:
+								print('File not found.')
 				elif command == 'cls':
 					if os.name == 'nt':
 						os.system('cls')
