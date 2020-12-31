@@ -12,7 +12,7 @@ try:
 	with open('version.txt', 'r') as f:
 		VERSION = f.read()
 except FileNotFoundError:
-	VERSION = '0.5'
+	VERSION = '~Error~'
 except Exception as ex:
 	print(ex)
 
@@ -28,7 +28,7 @@ import pytz
 
 current_directory = str(os.path.dirname(os.path.realpath(__file__)))
 
-VALIDCOMMANDS = ['help', 'exit', 'cls', 'ip', 'platform', 'time']
+VALIDCOMMANDS = ['help', 'exit', 'cls', 'ip', 'platform', 'time', 'cd']
 VALIDCOMMANDS_SORTED = sorted(VALIDCOMMANDS, key=str.lower)
 
 print('CommandPy [Version {}]\n(c) 2020 Fred Pashley. All rights reserved.'.format(VERSION))
@@ -112,7 +112,37 @@ while True:
 						while True:
 							print('    {}'.format(str(dt.datetime.utcnow())[:19]))
 							time.sleep(1)
-					
+				elif command == 'cd':
+					if arguments == []:
+						print(current_directory)
+					else:
+						chosen_directory = arguments[0]
+						if len(arguments) > 1:
+							print('Invalid directory.')
+						elif os.path.exists(chosen_directory) is False:
+							print('Directory not found.')
+						else:
+							split = current_directory.split('\\')
+							if '\\' in chosen_directory:
+								new_directory = chosen_directory
+								current_directory = new_directory
+							else:
+								if '.' in chosen_directory:
+									the_list = []
+									for char in chosen_directory:
+										the_list.append(char)
+									del(the_list[0])
+									for char in the_list:
+										del(split[-1])
+									if len(split) == 0:
+										pass
+									else:
+										string = split[0]
+										for item in split[1:]:
+											string = '{}\\{}'.format(string, item)
+										current_directory = string
+								else:
+									chosen_directory = current_directory
 				else:
 					pass
 			else:
