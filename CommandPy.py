@@ -70,7 +70,7 @@ while True:
 						elif help_command == 'open':
 							print('Open a file, enter full path for different directory, file name for same directory. \n\nOPEN')
 						elif help_command == 'time':
-							pass
+							print('Find the current time and use a timer.\n\nTIME [/?] [amount]\n\n    /s    ... System time (local)\n    /t    ... Takes an amout in seconds (must explicitly say "s") and\n              sleeps for that amount of time.')
 				elif command == 'exit':
 					quit()	
 				elif command == 'open':
@@ -112,17 +112,26 @@ while True:
 				elif command == 'time':
 					if arguments == []:
 						print('\n    {}'.format(str(dt.datetime.utcnow())[:19]))
+					elif arguments[0] == '-s':
+						print('\n    {}'.format(str(dt.datetime.now())[:19]))
+					elif arguments[0] == '-t':
+						try:
+							amount = str(arguments[1])
+							if len(amount) >= 2:
+								if amount[-1].lower() == 's':
+									time.sleep(int(amount[0]))
+								else:
+									pass
+							else:
+								pass
+						except IndexError:
+							print('You must give an amount of time.')
 					elif arguments[0] == '-x':
 						print('')
 						while True:
 							print('    {}'.format(str(dt.datetime.utcnow())[:19]))
 							time.sleep(1)
-					elif arguments[0] == '-u' or arguments[0] == '0':
-						print('\n    {}'.format(dt.datetime.utcnow()))
-					elif arguments[0] == '1':
-						tz = pytz.timezone('Europe/Gibraltar')
-						now = datetime.now(tz)
-						print('\n    {}'.format(now))
+					
 				else:
 					pass
 			else:

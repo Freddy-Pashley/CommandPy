@@ -16,6 +16,10 @@ from developers to general home-use.
 
 **Latest Version: 0.5**
 
+
+.. contents::
+
+
 ------------------
 Support/Assistance
 ------------------
@@ -27,8 +31,6 @@ For support/assistance, you can use one of the following methods to contact the 
 * Email
 	* freddy.pashley@gmail.com
 
-
-.. contents::
 
 ------------
 Installation
@@ -46,6 +48,13 @@ Instructions for installation:
 *Note: You must have Python 3.8 or later to be able to run this command prompt.*
 
 **Download the developer version of CommandPy** :download:`here <../CommandPyDEV.zip>`.
+
+--------------
+Be a Developer
+--------------
+
+You can join our team! Head over to our Discord (https://discord.gg/cuRVHC85Yb) and check out the #be-a-developer channel.
+See you soon!
 
 --------
 Commands
