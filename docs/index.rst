@@ -91,3 +91,11 @@ PLATFORM
 
 	Syntax:
 		``PLATFORM``
+
+TIME
+----
+
+	Find the current time and use a timer.
+
+	Syntax:
+		``TIME [/?] [/?]``
