@@ -24,11 +24,12 @@ import socket
 import time
 import datetime as dt
 import pytz
+import webbrowser as wb
 
 
 current_directory = str(os.path.dirname(os.path.realpath(__file__)))
 
-VALIDCOMMANDS = ['help', 'exit', 'cls', 'ip', 'platform', 'time', 'cd', 'open']
+VALIDCOMMANDS = ['help', 'exit', 'cls', 'ip', 'platform', 'time', 'cd', 'open', 'web']
 VALIDCOMMANDS_SORTED = sorted(VALIDCOMMANDS, key=str.lower)
 
 print('CommandPy [Version {}]\n(c) 2020 Fred Pashley. All rights reserved.'.format(VERSION))
@@ -68,9 +69,11 @@ while True:
 						elif help_command == 'platform':
 							print('Platform and hardware information.\n\nPLATFORM')
 						elif help_command == 'open':
-							print('Open a file, enter full path for different directory, file name for same directory. \n\nOPEN')
+							print('Open a file, enter full path for different directory, file name for same directory. \n\nOPEN [directory]')
 						elif help_command == 'time':
 							print('Find the current time and use a timer.\n\nTIME [/?] [amount]\n\n    /s    ... System time (local)\n    /t    ... Takes an amout in seconds (must explicitly say "s") and\n              sleeps for that amount of time.')
+						elif help_command == 'web':
+							print('Opens a webpage.\n\nWEB [address]')
 				elif command == 'exit':
 					quit()	
 				elif command == 'open':
@@ -162,6 +165,26 @@ while True:
 										current_directory = string
 								else:
 									chosen_directory = current_directory
+				elif command == 'web':
+					if len(arguments)>1:
+						print('Invalid address.')
+					elif arguments == []:
+						try:
+							wb.get('C:/Program Files (x86)/Google/Chrome/Application/chrome.exe').open('google.com')
+							print('Opening your browser...')
+						except wb.Error:
+							print('Opening your browser...')
+							wb.open('google.com')
+					elif arguments[0] == '-c':
+						try:
+							wb.get('C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s').open('google.com')
+							print('Opening your browser...')
+						except wb.Error:
+							print('Opening your browser...')
+							wb.open('google.com')
+					else:
+						print(f'Opening {arguments[0]} ...')
+						wb.open(arguments[0])
 				else:
 					pass
 			else:
