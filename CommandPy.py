@@ -74,6 +74,8 @@ while True:
 							print('Find the current time and use a timer.\n\nTIME [/?] [amount]\n\n    /s    ... System time (local)\n    /t    ... Takes an amout in seconds (must explicitly say "s") and\n              sleeps for that amount of time.')
 						elif help_command == 'web':
 							print('Opens a webpage.\n\nWEB [address]')
+						elif help_command == 'cd':
+							print('Changes the selected directory.\n\nCD [direction/destination]')
 				elif command == 'exit':
 					quit()	
 				elif command == 'open':
@@ -138,33 +140,39 @@ while True:
 					if arguments == []:
 						print(current_directory)
 					else:
-						chosen_directory = arguments[0]
-						if len(arguments) > 1:
-							print('Invalid directory.')
-						elif os.path.exists(chosen_directory) is False:
-							print('Directory not found.')
-						else:
-							split = current_directory.split('\\')
-							if '\\' in chosen_directory:
-								new_directory = chosen_directory
-								current_directory = new_directory
-							else:
-								if '.' in chosen_directory:
-									the_list = []
-									for char in chosen_directory:
-										the_list.append(char)
-									del(the_list[0])
-									for char in the_list:
-										del(split[-1])
-									if len(split) == 0:
-										pass
+						if str(arguments[0])[0] == '.':
+							argument = arguments[0]
+							old = current_directory.split('\\')
+							try:
+								for char in argument:
+									if len(old) == 1:
+										break
 									else:
-										string = split[0]
-										for item in split[1:]:
-											string = '{}\\{}'.format(string, item)
-										current_directory = string
+										del(old[-1])
+							except IndexError:
+								pass
+							finally:
+								final = old[0]
+								try:
+									for x in old[1:]:
+										final = '{}\\{}'.format(final, x)
+								except IndexError:
+									pass
+								finally:
+									current_directory = final
+						else:
+							st = f'{current_directory}\\{arguments[0]}'
+							chosen_directory = st
+							try:
+								for x in arguments[1:]:
+									chosen_directory = '{} {}'.format(chosen_directory, x)
+							except IndexError:
+								pass
+							finally:
+								if os.path.exists(chosen_directory) is False:
+									print('Directory not found.')
 								else:
-									chosen_directory = current_directory
+									current_directory = chosen_directory
 				elif command == 'web':
 					if len(arguments)>1:
 						print('Invalid address.')

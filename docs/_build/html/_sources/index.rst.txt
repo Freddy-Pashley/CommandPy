@@ -3,24 +3,34 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-=======================
-CommandPy Documentation
-=======================
 
-The **CommandPy Documentation** will solve your problems with the system you use,
-by providing an explanation to each command and patch notes.
+=========
+CommandPy
+=========
 
 *CommandPy* is a modern, simplistic and useful command prompt. It can be used for many purposes,
-from developers to general home-use.
+from developers to general use.
+
+*CommandPy* was founded by Fred Pashley in 2020, and is mostly programmed in Python 3.
 
 
-**Latest Version: 0.5**
+.. contents::
 
-------------------
-Support/Assistance
-------------------
 
-For support/assistance, you can use one of the following methods to contact the developer:
+:Latest Version: 0.6 (Unstable)
+
+:Head Developer: Fred Pashley
+
+:Developers:
+	down328,
+	MQXO
+
+
+----------------------
+Support and Assistance
+----------------------
+
+For support/assistance, you can use one of the following methods to contact the developers:
 
 * Discord
 	* https://discord.gg/cuRVHC85Yb
@@ -28,66 +38,17 @@ For support/assistance, you can use one of the following methods to contact the 
 	* freddy.pashley@gmail.com
 
 
-.. contents::
-
 ------------
 Installation
 ------------
 
-**To install CommandPy**, download the ZIP folder :download:`by clicking here <../CommandPy.zip>`.
-
+`Install CommandPy by clicking on me.
+<https://github.com/Freddy-Pashley/CommandPy/releases>`_
 
 Instructions for installation:
 
-1. Download the :download:`the ZIP folder <../CommandPy.zip>`
-2. Extract the ZIP folder
-3. Open the *CommandPy.py* file
+1. Download a release from the above link.
+2. Extract the ZIP folder.
+3. Open the *CommandPy.exe* file.
 
-*Note: You must have Python 3.8 or later to be able to run this command prompt.*
-
-**Download the developer version of CommandPy** :download:`here <../CommandPyDEV.zip>`.
-
---------
-Commands
---------
-
-CLS
----
-
-	Clears the screen.
-
-	Syntax:
-		``CLS``
-
-
-EXIT
-----
-	
-	Quits the CommandPy program (command interpreter).
-
-	Syntax:
-		``EXIT``
-
-HELP
-----
-	
-	Provides help information for commands.
-
-	Syntax:
-		``HELP [command]``
-
-IP
----
-	
-	Shows all IP addresses detected in the network.
-
-	Syntax:
-		``IP [/?]``
-
-PLATFORM
---------
-	
-	Platform and hardware information.
-
-	Syntax:
-		``PLATFORM``
+*Note: You must have Python 3.8 or later installed to be able to use CommandPy.*
