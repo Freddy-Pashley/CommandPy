@@ -17,7 +17,7 @@ from developers to general use.
 .. contents::
 
 
-:Latest Version: 0.6 (Unstable)
+:Latest Version: 0.6 (Stable)
 
 :Head Developer: Fred Pashley
 
