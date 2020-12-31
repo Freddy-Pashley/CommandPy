@@ -8,16 +8,55 @@ MQXO
 """
 # License: MIT (see "LICENSE" file)
 
+import os
+
+
+def make_settings():
+	if os.path.exists('./settings'):
+		return True
+	else:
+		os.mkdir('./settings')
+
+		os.mkdir('./settings/directories')
+		try:
+			open('./settings/directories/sublime_text.txt', 'x')
+		except FileExistsError:
+			pass
+		except:
+			pass
+		try:
+			open('./settings/directories/visual_studio_code.txt', 'x')
+		except FileExistsError:
+			pass
+		except:
+			pass
+		try:
+			open('./settings/directories/minecraft_launcher.txt', 'x')
+		except FileExistsError:
+			pass
+		except:
+			pass
+
+		os.mkdir('./settings/user')
+		try:
+			open('./settings/user/user.txt', 'x')
+		except FileExistsError:
+			pass
+		except:
+			pass
+
 try:
 	with open('version.txt', 'r') as f:
 		VERSION = f.read()
 except FileNotFoundError:
-	VERSION = '0.6 (Stable)'
+	VERSION = '~Error~'
 except Exception as ex:
 	print(ex)
 
 
-import os
+make_settings()
+
+
 import sys
 import platform as pt
 import socket
@@ -25,6 +64,7 @@ import time
 import datetime as dt
 import pytz
 import webbrowser as wb
+import getpass
 
 
 current_directory = str(os.path.dirname(os.path.realpath(__file__)))
@@ -35,6 +75,11 @@ VALIDCOMMANDS_SORTED = sorted(VALIDCOMMANDS, key=str.lower)
 print('CommandPy [Version {}]\n(c) 2020 Fred Pashley. All rights reserved.'.format(VERSION))
 
 while True:
+	f = open('./settings/user/user.txt', 'r')
+	if f.read() == '':
+		f.close()
+		with open('./settings/user/user.txt', 'w') as f:
+			f.write(input('\nHello there! What should I call you? '))
 	option = input('\n{}>'.format(current_directory))
 
 	command_split = option.split()
@@ -69,7 +114,7 @@ while True:
 						elif help_command == 'platform':
 							print('Platform and hardware information.\n\nPLATFORM')
 						elif help_command == 'open':
-							print('Open a file, enter full path for different directory, file name for same directory. \n\nOPEN [directory]')
+							print('Open a file, enter full path for different directory, file name for same directory. \n\nOPEN [/?] [directory]\n\n    /f    ... Opens a file')
 						elif help_command == 'time':
 							print('Find the current time and use a timer.\n\nTIME [/?] [amount]\n\n    /s    ... System time (local)\n    /t    ... Takes an amout in seconds (must explicitly say "s") and\n              sleeps for that amount of time.')
 						elif help_command == 'web':
@@ -79,9 +124,7 @@ while True:
 				elif command == 'exit':
 					quit()	
 				elif command == 'open':
-					if arguments == []:
-						print('You cannot have an empty directory.')
-					else:
+					if arguments[0] == '-f':
 						openstring = arguments[0]
 						if "\\" in openstring:
 							try:
@@ -95,6 +138,35 @@ while True:
 								os.startfile(directory)
 							except FileNotFoundError:
 								print('File not found.')
+					else:
+						choice = arguments[0].lower()
+						if choice == 'st':
+							with open('./settings/directories/sublime_text.txt', 'r') as f:
+								link = f.read()
+								if os.path.exists(link):
+									list = link.split('\\')
+									if '.' in list[-1]:
+										os.startfile(link)
+									else:
+										os.startfile(r'{}\\sublime_text.exe'.format(link))
+						elif choice == 'vsc':
+							with open('./settings/directories/visual_studio_code.txt', 'r') as f:
+								link = f.read()
+								if os.path.exists(link):
+									list = link.split('\\')
+									if '.' in list[-1]:
+										os.startfile(link)
+									else:
+										os.startfile(r'{}\\Code.exe'.format(link))
+						elif choice == 'minecraft':
+							with open('./settings/directories/minecraft.txt', 'r') as f:
+								link = f.read()
+								if os.path.exists(link):
+									list = link.split('\\')
+									if '.' in list[-1]:
+										os.startfile(link)
+									else:
+										os.startfile(r'{}\\MinecraftLauncher.exe'.format(link))
 				elif command == 'cls':
 					if os.name == 'nt':
 						os.system('cls')
