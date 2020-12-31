@@ -1,4 +1,11 @@
 # Author: Fred Pashley
+"""
+Developers:
+
+Fred Pashley
+down328
+MQXO
+"""
 # License: MIT (see "LICENSE" file)
 
 try:
@@ -12,13 +19,16 @@ except Exception as ex:
 
 import os
 import sys
-import platform
+import platform as pt
 import socket
+import time
+import datetime as dt
+import pytz
 
 
 current_directory = str(os.path.dirname(os.path.realpath(__file__)))
 
-VALIDCOMMANDS = ['help', 'exit', 'cls', 'ip', 'platform']
+VALIDCOMMANDS = ['help', 'exit', 'cls', 'ip', 'platform', 'time']
 VALIDCOMMANDS_SORTED = sorted(VALIDCOMMANDS, key=str.lower)
 
 print('CommandPy [Version {}]\n(c) 2020 Fred Pashley. All rights reserved.'.format(VERSION))
@@ -57,6 +67,8 @@ while True:
 							print('Shows all IP addresses detected in the network.\n\nIP [/?]\n\n    /n    ... All IPs except localhosts.')
 						elif help_command == 'platform':
 							print('Platform and hardware information.\n\nPLATFORM')
+						elif help_command == 'time':
+							pass
 				elif command == 'exit':
 					quit()
 				elif command == 'cls':
@@ -74,10 +86,24 @@ while True:
 							print(f'    {item}')
 				elif command == 'platform':
 					if arguments == []:
-						print(f'Architecture: {platform.architecture()}')
-						print(f'Machine: {platform.machine()}')
-						print(f'Platform: {platform.platform()}')
-						print(f'Processor: {platform.processor()}')
+						print(f'Architecture: {pt.architecture()}')
+						print(f'Machine: {pt.machine()}')
+						print(f'Platform: {pt.platform()}')
+						print(f'Processor: {pt.processor()}')
+				elif command == 'time':
+					if arguments == []:
+						print('\n    {}'.format(str(dt.datetime.utcnow())[:19]))
+					elif arguments[0] == '-x':
+						print('')
+						while True:
+							print('    {}'.format(str(dt.datetime.utcnow())[:19]))
+							time.sleep(1)
+					elif arguments[0] == '-u' or arguments[0] == '0':
+						print('\n    {}'.format(dt.datetime.utcnow()))
+					elif arguments[0] == '1':
+						tz = pytz.timezone('Europe/Gibraltar')
+						now = datetime.now(tz)
+						print('\n    {}'.format(now))
 				else:
 					pass
 			else:
