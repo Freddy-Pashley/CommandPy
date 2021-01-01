@@ -126,7 +126,7 @@ while True:
 						for item in VALIDCOMMANDS_SORTED:
 							print(f'{item.upper()}')
 						print('\nFor more information on tools see the online documentation.')
-					elif len(arguments) > 1:S
+					elif len(arguments) > 1:
 						print('This command is not supported by the help utility.')
 					else:
 						help_command = str(arguments[0]).lower()
