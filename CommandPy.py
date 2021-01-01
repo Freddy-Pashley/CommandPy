@@ -69,17 +69,22 @@ import getpass
 
 current_directory = str(os.path.dirname(os.path.realpath(__file__)))
 
-VALIDCOMMANDS = ['help', 'exit', 'cls', 'ip', 'platform', 'time', 'cd', 'open', 'web']
+VALIDCOMMANDS = ['help', 'exit', 'cls', 'ip', 'platform', 'time', 'cd', 'open', 'web', 'settings']
 VALIDCOMMANDS_SORTED = sorted(VALIDCOMMANDS, key=str.lower)
 
 print('CommandPy [Version {}]\n(c) 2020 Fred Pashley. All rights reserved.'.format(VERSION))
 
 while True:
 	f = open('./settings/user/user.txt', 'r')
-	if f.read() == '':
-		f.close()
+	data = f.readlines()
+	if data == []:
+		new = []
 		with open('./settings/user/user.txt', 'w') as f:
-			f.write(input('\nHello there! What should I call you? '))
+			a = input('\nHello there! What should I call you? ')
+			b = input('What is your age? (We use this to protect you from potentially malicious content.) ')
+			new.append(f'{a}\n')
+			new.append(f'{b}\n')
+			f.writelines(new)
 	option = input('\n{}>'.format(current_directory))
 
 	command_split = option.split()
@@ -121,6 +126,65 @@ while True:
 							print('Opens a webpage.\n\nWEB [address]')
 						elif help_command == 'cd':
 							print('Changes the selected directory.\n\nCD [direction/destination]')
+				elif command == 'settings':
+					if arguments == []:
+						print('')
+						for filename in os.listdir(r'./settings/user'):
+							with open(r'./settings/user/'+filename, 'r') as f:
+								a = filename.split('.')
+								filename = a[0].title()
+								print(f'{filename} : {f.read()}')
+						for filename in os.listdir(r'./settings/directories'):
+							with open(r'./settings/directories/'+filename, 'r') as f:
+								a = filename.split('.')
+								filename = a[0].title()
+								print(f'{filename} : {f.read()}')
+					elif arguments[0] == 'clear':
+						if arguments[1] == 'all':
+							a = input('Confirm you want to factory reset all of your settings? ("Yes/Confirm") ').upper()
+							if a == 'YES' or a == 'CONFIRM':
+								for filename in os.listdir(f'./settings/user'):
+									with open(r'./settings/user/'+filename, 'w'):
+										f.close()
+								for filename in os.listdir(f'./settings/directories'):
+									with open(r'./settings/directories/'+filename, 'w'):
+										f.close()
+							else:
+								pass
+						elif arguments[1] == 'user':
+							a = input('Confirm you want to factory reset all of your user settings? ("Yes/Confirm") ').upper()
+							if a == 'YES' or a == 'CONFIRM':
+								for filename in os.listdir(f'./settings/user'):
+									with open(r'./settings/user/'+filename, 'w'):
+										f.close()
+						elif arguments[1] == 'directories':
+							a = input('Confirm you want to factory reset all of your directory settings? ("Yes/Confirm") ').upper()
+							if a == 'YES' or a == 'CONFIRM':
+								for filename in os.listdir(f'./settings/directories'):
+									with open(r'./settings/directories/'+filename, 'w'):
+										f.close()
+					elif arguments[0] == '-m':
+						if arguments[1] == '-d':
+							if arguments[2] == 'st':
+								directory = arguments[3]
+								with open('./settings/directories/sublime_text.txt', 'w') as f:
+									f.write(directory)
+							elif arguments[2] == 'vsc':
+								directory = arguments[3]
+								with open('./settings/directories/visual_studio_code.txt', 'w') as f:
+									f.write(directory)
+							elif arguments[2] == 'minecraft':
+								directory = arguments[3]
+								with open('./settings/directories/minecraft_launcher.txt', 'w') as f:
+									f.write(directory)
+						elif arguments[1] == '-u':
+							if arguments[2] == 'name':
+								name = arguments[3]
+								with open('./settings/user/user.txt', 'r') as f:
+									data = f.readlines()
+								data[0] = f'{name}\n'
+								with open('./settings/user/user.txt', 'w') as f:
+									f.writelines(data)
 				elif command == 'exit':
 					quit()	
 				elif command == 'open':
