@@ -84,7 +84,7 @@ while True:
 		new = []
 		with open('./settings/user/user.txt', 'w') as f:
 			a = input('\nHello there! What should I call you? ')
-			b = input('What is your age? (We use this to protect you from potentially malicious content.) ')
+			b = input('What is your age? (We use this to protect you from potentially malicious content and so we are allowed to collect data.) ')
 			new.append(f'{a}\n')
 			new.append(f'{b}\n')
 			f.writelines(new)
@@ -180,26 +180,32 @@ while True:
 										f.close()
 					elif arguments[0] == '-m':
 						if arguments[1] == '-d':
-							if arguments[2] == 'st':
-								directory = arguments[3]
-								with open('./settings/directories/sublime_text.txt', 'w') as f:
-									f.write(directory)
-							elif arguments[2] == 'vsc':
-								directory = arguments[3]
-								with open('./settings/directories/visual_studio_code.txt', 'w') as f:
-									f.write(directory)
-							elif arguments[2] == 'minecraft':
-								directory = arguments[3]
-								with open('./settings/directories/minecraft_launcher.txt', 'w') as f:
-									f.write(directory)
-						elif arguments[1] == '-u':
-							if arguments[2] == 'name':
-								name = arguments[3]
-								with open('./settings/user/user.txt', 'r') as f:
-									data = f.readlines()
-								data[0] = f'{name}\n'
-								with open('./settings/user/user.txt', 'w') as f:
-									f.writelines(data)
+							directory = arguments[3]
+							string = directory
+							try:
+								for x in arguments[4:]:
+									string = f'{string}\\{x}'
+								directory = string
+							except IndexError:
+								pass
+							finally:
+								if arguments[2] == 'st':
+									with open('./settings/directories/sublime_text.txt', 'w') as f:
+										f.write(directory)
+								elif arguments[2] == 'vsc':
+									with open('./settings/directories/visual_studio_code.txt', 'w') as f:
+										f.write(directory)
+								elif arguments[2] == 'minecraft':
+									with open('./settings/directories/minecraft_launcher.txt', 'w') as f:
+										f.write(directory)
+							elif arguments[1] == '-u':
+								if arguments[2] == 'name':
+									name = arguments[3]
+									with open('./settings/user/user.txt', 'r') as f:
+										data = f.readlines()
+									data[0] = f'{name}\n'
+									with open('./settings/user/user.txt', 'w') as f:
+										f.writelines(data)
 				elif command == 'exit':
 					quit()	
 				elif command == 'open':
