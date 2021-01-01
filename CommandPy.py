@@ -20,7 +20,7 @@ import os
 
 
 def make_settings():
-	if os.path.exists('./settings'):
+	if os.path.exists('./settings'): 
 		return True
 	else:
 		os.mkdir('./settings')
@@ -66,13 +66,25 @@ except Exception as ex:
 make_settings()
 
 
+import sys
+import platform as pt
+import socket
+import time
+import datetime as dt
+import pytz
+import webbrowser as wb
+import getpass
+import random
+
+
 current_directory = str(os.path.dirname(os.path.realpath(__file__)))
 
 VALIDCOMMANDS = ['help', 'exit', 'cls', 'ip', 'platform', 'time', 'cd', 'open', 'web', 'settings', 'ping']
 VALIDCOMMANDS_SORTED = sorted(VALIDCOMMANDS, key=str.lower)
 
-print(
-	'CommandPy [Version {}]\n(c) 2020 Fred Pashley. All rights reserved.'.format(VERSION))
+confirmations = ['okay', 'sure', 'alright']
+
+print('CommandPy [Version {}]\n(c) 2020 Fred Pashley. All rights reserved.'.format(VERSION))
 
 while True:
 	f = open('./settings/user/user.txt', 'r')
@@ -81,11 +93,18 @@ while True:
 		new = []
 		with open('./settings/user/user.txt', 'w') as f:
 			a = input('\nHello there! What should I call you? ')
-			b = input(
-				'What is your age? (We use this to protect you from potentially malicious content.) ')
+			b = input('What is your age? (We use this to protect you from potentially malicious content and so we are allowed to collect data.) ')
 			new.append(f'{a}\n')
 			new.append(f'{b}\n')
 			f.writelines(new)
+
+	with open('./settings/user/user.txt', 'r') as f:
+		data = f.readlines()
+		if int(data[1]) < 13:
+			print('Due to you being under the age of 13, it is illegal to use this product.\nWe apologise for any inconvenience.')
+			time.sleep(10)
+			quit()
+
 	option = input('\n{}>'.format(current_directory))
 
 	command_split = option.split()
@@ -114,8 +133,9 @@ while True:
 						if help_command == 'exit':
 							print('Quits the CommandPy program (command interpreter).\n\nEXIT')
 						elif help_command == 'help':
-							print(
-								'Provides help information for commands.\n\nHELP [command]\n\n    command - displays help information on that command.')
+							print('Provides help information for commands.\n\nHELP [command]\n\n    command - displays help information on that command.')
+						elif help_command == 'settings':
+							print('Your CommandPy settings.\n\nSETTINGS [/?] [/?] [object]\n\n    clear    ... Factory reset CommandPy.\n                 all, user, directories\n    /m       ... Modify your settings\n                 /u, /d')
 						elif help_command == 'cls':
 							print('Clears the screen.\n\nCLS')
 						elif help_command == 'ip':
@@ -142,7 +162,9 @@ while True:
 							with open(r'./settings/user/'+filename, 'r') as f:
 								a = filename.split('.')
 								filename = a[0].title()
-								print(f'{filename} : {f.read()}')
+								if filename == 'User':
+									data = f.readlines()
+									print(f'{filename} : {data[0]}Age: {data[1]}')
 						for filename in os.listdir(r'./settings/directories'):
 							with open(r'./settings/directories/'+filename, 'r') as f:
 								a = filename.split('.')
@@ -177,26 +199,32 @@ while True:
 										f.close()
 					elif arguments[0] == '-m':
 						if arguments[1] == '-d':
-							if arguments[2] == 'st':
-								directory = arguments[3]
-								with open('./settings/directories/sublime_text.txt', 'w') as f:
-									f.write(directory)
-							elif arguments[2] == 'vsc':
-								directory = arguments[3]
-								with open('./settings/directories/visual_studio_code.txt', 'w') as f:
-									f.write(directory)
-							elif arguments[2] == 'minecraft':
-								directory = arguments[3]
-								with open('./settings/directories/minecraft_launcher.txt', 'w') as f:
-									f.write(directory)
-						elif arguments[1] == '-u':
-							if arguments[2] == 'name':
-								name = arguments[3]
-								with open('./settings/user/user.txt', 'r') as f:
-									data = f.readlines()
-								data[0] = f'{name}\n'
-								with open('./settings/user/user.txt', 'w') as f:
-									f.writelines(data)
+							directory = arguments[3]
+							string = directory
+							try:
+								for x in arguments[4:]:
+									string = f'{string}\\{x}'
+								directory = string
+							except IndexError:
+								pass
+							finally:
+								if arguments[2] == 'st':
+									with open('./settings/directories/sublime_text.txt', 'w') as f:
+										f.write(directory)
+								elif arguments[2] == 'vsc':
+									with open('./settings/directories/visual_studio_code.txt', 'w') as f:
+										f.write(directory)
+								elif arguments[2] == 'minecraft':
+									with open('./settings/directories/minecraft_launcher.txt', 'w') as f:
+										f.write(directory)
+							elif arguments[1] == '-u':
+								if arguments[2] == 'name':
+									name = arguments[3]
+									with open('./settings/user/user.txt', 'r') as f:
+										data = f.readlines()
+									data[0] = f'{name}\n'
+									with open('./settings/user/user.txt', 'w') as f:
+										f.writelines(data)
 				elif command == 'exit':
 					quit()
 				elif command == 'ping':
@@ -207,15 +235,25 @@ while True:
 						if "\\" in openstring:
 							try:
 								os.startfile(arguments[0])
+								with open('./settings/user/user.txt', 'r') as f:
+									name = f.readlines(); name = name[0]; name = name[:-1]
+									print(f'{random.choice(confirmations).title()} {name}, opening {arguments[1]}.')
 							except FileNotFoundError:
-								print('File not found.')
+								with open('./settings/user/user.txt', 'r') as f:
+									name = f.readlines(); name = name[0]; name = name[:-1]
+								print(f"Sorry {name}, but I can't find that file.")
 						else:
-							directory = '{}\\{}'.format(
-								str(current_directory), openstring)
+							directory = '{}\\{}'.format(str(current_directory), arguments[1])
 							try:
 								os.startfile(directory)
+								with open('./settings/user/user.txt', 'r') as f:
+									name = f.readlines(); name = name[0]; name = name[:-1]
+									print(f'{random.choice(confirmations).title()} {name}, opening {arguments[1]}.')
 							except FileNotFoundError:
-								print('File not found.')
+								with open('./settings/user/user.txt', 'r') as f:
+									name = f.readlines(); name = name[0]; name = name[:-1]
+								print(f"Sorry {name}, but I can't find that file.")
+
 					else:
 						choice = arguments[0].lower()
 						if choice == 'st':
@@ -225,8 +263,14 @@ while True:
 									list = link.split('\\')
 									if '.' in list[-1]:
 										os.startfile(link)
+										with open('./settings/user/user.txt', 'r') as f:
+											name = f.readlines(); name = name[0]; name = name[:-1]
+											print(f'{random.choice(confirmations).title()} {name}, opening Sublime Text.')
 									else:
 										os.startfile(r'{}\\sublime_text.exe'.format(link))
+										with open('./settings/user/user.txt', 'r') as f:
+											name = f.readlines(); name = name[0]; name = name[:-1]
+											print(f'{random.choice(confirmations).title()} {name}, opening Sublime Text.')
 						elif choice == 'vsc':
 							with open('./settings/directories/visual_studio_code.txt', 'r') as f:
 								link = f.read()
@@ -234,17 +278,29 @@ while True:
 									list = link.split('\\')
 									if '.' in list[-1]:
 										os.startfile(link)
+										with open('./settings/user/user.txt', 'r') as f:
+											name = f.readlines(); name = name[0]; name = name[:-1]
+											print(f'{random.choice(confirmations).title()} {name}, opening Visual Studio Code.')
 									else:
 										os.startfile(r'{}\\Code.exe'.format(link))
+										with open('./settings/user/user.txt', 'r') as f:
+											name = f.readlines(); name = name[0]; name = name[:-1]
+											print(f'{random.choice(confirmations).title()} {name}, opening Visual Studio Code.')
 						elif choice == 'minecraft':
-							with open('./settings/directories/minecraft.txt', 'r') as f:
+							with open('./settings/directories/minecraft_launcher.txt', 'r') as f:
 								link = f.read()
 								if os.path.exists(link):
 									list = link.split('\\')
 									if '.' in list[-1]:
 										os.startfile(link)
+										with open('./settings/user/user.txt', 'r') as f:
+											name = f.readlines(); name = name[0]; name = name[:-1]
+											print(f'{random.choice(confirmations).title()} {name}, opening Minecraft.')
 									else:
 										os.startfile(r'{}\\MinecraftLauncher.exe'.format(link))
+										with open('./settings/user/user.txt', 'r') as f:
+											name = f.readlines(); name = name[0]; name = name[:-1]
+											print(f'{random.choice(confirmations).title()} {name}, opening Minecraft.')
 				elif command == 'cls':
 					if os.name == 'nt':
 						os.system('cls')
@@ -320,31 +376,43 @@ while True:
 								pass
 							finally:
 								if os.path.exists(chosen_directory) is False:
-									print('Directory not found.')
+									with open('./settings/user/user.txt', 'r') as f:
+											name = f.readlines(); name = name[0]; name = name[:-1]
+											print(f"Sorry {name}, but I can't find that directory.")
 								else:
 									current_directory = chosen_directory
 				elif command == 'web':
-					if len(arguments) > 1:
-						print('Invalid address.')
+					if len(arguments)>1:
+						with open('./settings/user/user.txt', 'r') as f:
+							name = f.readlines(); name = name[0]; name = name[:-1]
+							print(f"Sorry {name}, but that is an invalid address.")
 					elif arguments == []:
 						try:
-							wb.get(
-								'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe').open('google.com')
-							print('Opening your browser...')
+							wb.get('C:/Program Files (x86)/Google/Chrome/Application/chrome.exe').open('google.com')
+							with open('./settings/user/user.txt', 'r') as f:
+								name = f.readlines(); name = name[0]; name = name[:-1]
+								print(f"{random.choice(confirmations).title()} {name}, opening your browser.")
 						except wb.Error:
-							print('Opening your browser...')
 							wb.open('google.com')
+							with open('./settings/user/user.txt', 'r') as f:
+								name = f.readlines(); name = name[0]; name = name[:-1]
+								print(f"{random.choice(confirmations).title()} {name}, opening your browser.")
 					elif arguments[0] == '-c':
 						try:
-							wb.get(
-								'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s').open('google.com')
-							print('Opening your browser...')
+							wb.get('C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s').open('google.com')
+							with open('./settings/user/user.txt', 'r') as f:
+								name = f.readlines(); name = name[0]; name = name[:-1]
+								print(f"{random.choice(confirmations).title()} {name}, opening your browser.")
 						except wb.Error:
-							print('Opening your browser...')
 							wb.open('google.com')
+							with open('./settings/user/user.txt', 'r') as f:
+								name = f.readlines(); name = name[0]; name = name[:-1]
+								print(f"{random.choice(confirmations).title()} {name}, opening your browser.")
 					else:
-						print(f'Opening {arguments[0]} ...')
 						wb.open(arguments[0])
+						with open('./settings/user/user.txt', 'r') as f:
+							name = f.readlines(); name = name[0]; name = name[:-1]
+							print(f"{random.choice(confirmations).title()} {name}, opening {arguments[0]}.")
 				else:
 					pass
 			else:
