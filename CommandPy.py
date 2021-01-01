@@ -198,14 +198,14 @@ while True:
 								elif arguments[2] == 'minecraft':
 									with open('./settings/directories/minecraft_launcher.txt', 'w') as f:
 										f.write(directory)
-							elif arguments[1] == '-u':
-								if arguments[2] == 'name':
-									name = arguments[3]
-									with open('./settings/user/user.txt', 'r') as f:
-										data = f.readlines()
-									data[0] = f'{name}\n'
-									with open('./settings/user/user.txt', 'w') as f:
-										f.writelines(data)
+						elif arguments[1] == '-u':
+							if arguments[2] == 'name':
+								name = arguments[3]
+								with open('./settings/user/user.txt', 'r') as f:
+									data = f.readlines()
+								data[0] = f'{name}\n'
+								with open('./settings/user/user.txt', 'w') as f:
+									f.writelines(data)
 				elif command == 'exit':
 					quit()	
 				elif command == 'open':
