@@ -8,6 +8,14 @@ MQXO
 """
 # License: MIT (see "LICENSE" file)
 
+import getpass
+import webbrowser as wb
+import pytz
+import datetime as dt
+import time
+import socket
+import platform as pt
+import sys
 import os
 
 
@@ -45,6 +53,7 @@ def make_settings():
 		except:
 			pass
 
+
 try:
 	with open('version.txt', 'r') as f:
 		VERSION = f.read()
@@ -57,22 +66,13 @@ except Exception as ex:
 make_settings()
 
 
-import sys
-import platform as pt
-import socket
-import time
-import datetime as dt
-import pytz
-import webbrowser as wb
-import getpass
-
-
 current_directory = str(os.path.dirname(os.path.realpath(__file__)))
 
-VALIDCOMMANDS = ['help', 'exit', 'cls', 'ip', 'platform', 'time', 'cd', 'open', 'web', 'settings']
+VALIDCOMMANDS = ['help', 'exit', 'cls', 'ip', 'platform', 'time', 'cd', 'open', 'web', 'settings', 'ping']
 VALIDCOMMANDS_SORTED = sorted(VALIDCOMMANDS, key=str.lower)
 
-print('CommandPy [Version {}]\n(c) 2020 Fred Pashley. All rights reserved.'.format(VERSION))
+print(
+	'CommandPy [Version {}]\n(c) 2020 Fred Pashley. All rights reserved.'.format(VERSION))
 
 while True:
 	f = open('./settings/user/user.txt', 'r')
@@ -81,7 +81,8 @@ while True:
 		new = []
 		with open('./settings/user/user.txt', 'w') as f:
 			a = input('\nHello there! What should I call you? ')
-			b = input('What is your age? (We use this to protect you from potentially malicious content.) ')
+			b = input(
+				'What is your age? (We use this to protect you from potentially malicious content.) ')
 			new.append(f'{a}\n')
 			new.append(f'{b}\n')
 			f.writelines(new)
@@ -91,7 +92,9 @@ while True:
 	if command_split == []:
 		pass
 	else:
-		command = command_split[0]; command_original = command; command = command.lower()
+		command = command_split[0]
+		command_original = command
+		command = command.lower()
 		try:
 			arguments = command_split[1:]
 		except IndexError as er:
@@ -104,28 +107,34 @@ while True:
 						for item in VALIDCOMMANDS_SORTED:
 							print(f'{item.upper()}')
 						print('\nFor more information on tools see the online documentation.')
-					elif len(arguments) > 1:
+					elif len(arguments) > 1:S
 						print('This command is not supported by the help utility.')
 					else:
 						help_command = str(arguments[0]).lower()
 						if help_command == 'exit':
 							print('Quits the CommandPy program (command interpreter).\n\nEXIT')
 						elif help_command == 'help':
-							print('Provides help information for commands.\n\nHELP [command]\n\n    command - displays help information on that command.')
+							print(
+								'Provides help information for commands.\n\nHELP [command]\n\n    command - displays help information on that command.')
 						elif help_command == 'cls':
 							print('Clears the screen.\n\nCLS')
 						elif help_command == 'ip':
-							print('Shows all IP addresses detected in the network.\n\nIP [/?]\n\n    /n    ... All IPs except localhosts.')
+							print(
+								'Shows all IP addresses detected in the network.\n\nIP [/?]\n\n    /n    ... All IPs except localhosts.')
 						elif help_command == 'platform':
 							print('Platform and hardware information.\n\nPLATFORM')
 						elif help_command == 'open':
-							print('Open a file, enter full path for different directory, file name for same directory. \n\nOPEN [/?] [directory]\n\n    /f    ... Opens a file')
+							print(
+								'Open a file, enter full path for different directory, file name for same directory. \n\nOPEN [/?] [directory]\n\n    /f    ... Opens a file')
 						elif help_command == 'time':
-							print('Find the current time and use a timer.\n\nTIME [/?] [amount]\n\n    /s    ... System time (local)\n    /t    ... Takes an amout in seconds (must explicitly say "s") and\n              sleeps for that amount of time.')
+							print(
+								'Find the current time and use a timer.\n\nTIME [/?] [amount]\n\n    /s    ... System time (local)\n    /t    ... Takes an amout in seconds (must explicitly say "s") and\n              sleeps for that amount of time.')
 						elif help_command == 'web':
 							print('Opens a webpage.\n\nWEB [address]')
 						elif help_command == 'cd':
 							print('Changes the selected directory.\n\nCD [direction/destination]')
+						elif help_command == 'ping':
+							print('Opens cmd.exe and pings the specified address. \n\nPING [IP/Domain]')
 				elif command == 'settings':
 					if arguments == []:
 						print('')
@@ -141,7 +150,8 @@ while True:
 								print(f'{filename} : {f.read()}')
 					elif arguments[0] == 'clear':
 						if arguments[1] == 'all':
-							a = input('Confirm you want to factory reset all of your settings? ("Yes/Confirm") ').upper()
+							a = input(
+								'Confirm you want to factory reset all of your settings? ("Yes/Confirm") ').upper()
 							if a == 'YES' or a == 'CONFIRM':
 								for filename in os.listdir(f'./settings/user'):
 									with open(r'./settings/user/'+filename, 'w'):
@@ -152,13 +162,15 @@ while True:
 							else:
 								pass
 						elif arguments[1] == 'user':
-							a = input('Confirm you want to factory reset all of your user settings? ("Yes/Confirm") ').upper()
+							a = input(
+								'Confirm you want to factory reset all of your user settings? ("Yes/Confirm") ').upper()
 							if a == 'YES' or a == 'CONFIRM':
 								for filename in os.listdir(f'./settings/user'):
 									with open(r'./settings/user/'+filename, 'w'):
 										f.close()
 						elif arguments[1] == 'directories':
-							a = input('Confirm you want to factory reset all of your directory settings? ("Yes/Confirm") ').upper()
+							a = input(
+								'Confirm you want to factory reset all of your directory settings? ("Yes/Confirm") ').upper()
 							if a == 'YES' or a == 'CONFIRM':
 								for filename in os.listdir(f'./settings/directories'):
 									with open(r'./settings/directories/'+filename, 'w'):
@@ -186,7 +198,9 @@ while True:
 								with open('./settings/user/user.txt', 'w') as f:
 									f.writelines(data)
 				elif command == 'exit':
-					quit()	
+					quit()
+				elif command == 'ping':
+					os.system(f'ping {arguments[0]}')
 				elif command == 'open':
 					if arguments[0] == '-f':
 						openstring = arguments[0]
@@ -310,18 +324,20 @@ while True:
 								else:
 									current_directory = chosen_directory
 				elif command == 'web':
-					if len(arguments)>1:
+					if len(arguments) > 1:
 						print('Invalid address.')
 					elif arguments == []:
 						try:
-							wb.get('C:/Program Files (x86)/Google/Chrome/Application/chrome.exe').open('google.com')
+							wb.get(
+								'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe').open('google.com')
 							print('Opening your browser...')
 						except wb.Error:
 							print('Opening your browser...')
 							wb.open('google.com')
 					elif arguments[0] == '-c':
 						try:
-							wb.get('C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s').open('google.com')
+							wb.get(
+								'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s').open('google.com')
 							print('Opening your browser...')
 						except wb.Error:
 							print('Opening your browser...')
@@ -332,4 +348,5 @@ while True:
 				else:
 					pass
 			else:
-				print("'{}' is not recognized as an internal or external command,\noperable program or batch file.".format(command_original))
+				print("'{}' is not recognized as an internal or external command,\noperable program or batch file.".format(
+					command_original))
